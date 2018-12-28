@@ -2,7 +2,7 @@
 
 A small generic pooling singleton to help you make pools for your prefabs
 
-# How to set
+# How to setup
  - Make a prefab
  - Make an empty class that inherits from the UnityPool<T> with T being your prefab controller script , for example :
   ```     
