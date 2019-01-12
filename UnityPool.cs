@@ -9,7 +9,7 @@ public class UnityPool<T> : MonoBehaviour where T : MonoBehaviour
 
     public bool _DoPrewarm;
 
-    [Range(1 , 1000)]
+    [Range(1, 1000)]
     public int _PrewarmCount;
 
     private static UnityPool<T> _Instance;
@@ -37,6 +37,7 @@ public class UnityPool<T> : MonoBehaviour where T : MonoBehaviour
     public void Return(GameObject obj)
     {
         obj.SetActive(false);
+        obj.transform.SetParent(transform);
         _Pool.Enqueue(obj);
     }
 
@@ -48,6 +49,7 @@ public class UnityPool<T> : MonoBehaviour where T : MonoBehaviour
         }
 
         var obj = _Pool.Dequeue();
+        obj.transform.SetParent(null);
         obj.SetActive(true);
 
         return obj;
@@ -58,8 +60,7 @@ public class UnityPool<T> : MonoBehaviour where T : MonoBehaviour
         for (int i = 0; i < Count; i++)
         {
             var tmp = Instantiate(_Prefab.gameObject);
-            tmp.SetActive(false);
-            _Pool.Enqueue(tmp);
+            Return(tmp);
         }
     }
 }
